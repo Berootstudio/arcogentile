@@ -860,8 +860,9 @@ input, select, textarea, button { font-family: inherit; }
 [data-theme="dark"] .sticky-checkin-actions a { color: #fff; }
 [data-theme="dark"] .sticky-checkin-bar { color: rgba(255,255,255,0.9); }
 @media (max-width: 600px) {
-  .sticky-checkin-bar { flex-direction: column; gap: 6px; padding: 8px 16px; font-size: 0.76rem; }
-  .sticky-checkin-actions a { font-size: 0.72rem; padding: 4px 10px; }
+  .sticky-checkin-bar { flex-direction: row; flex-wrap: wrap; gap: 4px; padding: 6px 12px; font-size: 0.72rem; }
+  .sticky-checkin-actions { gap: 6px; }
+  .sticky-checkin-actions a { font-size: 0.68rem; padding: 3px 8px; }
 }
 .booking-reassurance {
   font-size: 0.78rem;
@@ -1966,12 +1967,12 @@ input, select, textarea, button { font-family: inherit; }
   :root { --section-pad: 72px; }
 
   .nav-container { gap: 8px; padding: 0 16px; justify-content: space-between; }
-  .nav-logo-img { height: 44px; }
-  .nav-toggle { display: flex; flex-shrink: 0; order: 1; }
-  .nav-logo { flex-shrink: 0; order: 2; margin: 0 auto; }
-  .lang-switcher { gap: 1px; padding: 2px; flex-shrink: 0; order: 3; }
-  .lang-btn { font-size: 0.65rem; padding: 3px 5px; }
-  .dark-toggle { width: 34px; height: 34px; font-size: 0.82rem; flex-shrink: 0; order: 4; }
+  .nav-logo-img { height: 40px; }
+  .nav-logo { flex-shrink: 0; order: 1; margin-right: auto; }
+  .lang-switcher { gap: 1px; padding: 2px; flex-shrink: 0; order: 2; }
+  .lang-btn { font-size: 0.62rem; padding: 2px 4px; }
+  .dark-toggle { width: 32px; height: 32px; font-size: 0.78rem; flex-shrink: 0; order: 3; }
+  .nav-toggle { display: flex; flex-shrink: 0; order: 4; margin-left: 4px; }
 
   .nav-links { display: none; gap: 0; }
   .nav-links.open {
