@@ -1972,7 +1972,7 @@ input, select, textarea, button { font-family: inherit; }
   .lang-switcher { gap: 1px; padding: 2px; flex-shrink: 0; order: 2; }
   .lang-btn { font-size: 0.62rem; padding: 2px 4px; }
   .dark-toggle { width: 32px; height: 32px; font-size: 0.78rem; flex-shrink: 0; order: 3; }
-  .nav-toggle { display: flex; flex-shrink: 0; order: 4; margin-left: 4px; }
+  .nav-toggle { display: none !important; }
 
   .nav-links { display: none; gap: 0; }
   .nav-links.open {
