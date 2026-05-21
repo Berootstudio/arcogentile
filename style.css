@@ -2039,6 +2039,8 @@ input, select, textarea, button { font-family: inherit; }
 
   /* Servizi */
   .servizi-grid { grid-template-columns: 1fr; }
+  .servizio-card { text-align: center; }
+  .servizio-card .servizio-icon { margin: 0 auto 16px; }
   .servizi-cats-grid { grid-template-columns: 1fr; }
   .servizi-cat-body { padding: 0 16px; }
 
