@@ -1963,11 +1963,11 @@ input, select, textarea, button { font-family: inherit; }
 
   .nav-container { gap: 8px; padding: 0 16px; justify-content: space-between; }
   .nav-logo-img { height: 44px; }
-  .nav-logo { flex-shrink: 0; order: 1; }
-  .lang-switcher { gap: 1px; padding: 2px; flex-shrink: 0; order: 2; margin: 0 auto; }
+  .nav-toggle { display: flex; flex-shrink: 0; order: 1; }
+  .nav-logo { flex-shrink: 0; order: 2; margin: 0 auto; }
+  .lang-switcher { gap: 1px; padding: 2px; flex-shrink: 0; order: 3; }
   .lang-btn { font-size: 0.65rem; padding: 3px 5px; }
-  .dark-toggle { width: 34px; height: 34px; font-size: 0.82rem; flex-shrink: 0; order: 3; }
-  .nav-toggle { display: flex; flex-shrink: 0; order: 4; }
+  .dark-toggle { width: 34px; height: 34px; font-size: 0.82rem; flex-shrink: 0; order: 4; }
 
   .nav-links { display: none; gap: 0; }
   .nav-links.open {
