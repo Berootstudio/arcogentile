@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- PRELOADER ---------- */
   const preloader = document.getElementById('preloader');
   const preloaderFill = document.getElementById('preloaderFill');
+  const preloaderLogo = document.querySelector('.preloader-logo');
   if (preloader && preloaderFill) {
+    // Ritardo visibilità logo per evitare flash nero su mobile
+    if (preloaderLogo) {
+      setTimeout(() => preloaderLogo.classList.add('loaded'), 50);
+    }
     let fillProgress = 0;
     const fillInterval = setInterval(() => {
       fillProgress += Math.random() * 18;
@@ -30,14 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 400);
     });
   }
-
-  /* ---------- SCROLL PROGRESS BAR ---------- */
-  const scrollProgress = document.getElementById('scrollProgress');
-  window.addEventListener('scroll', () => {
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
-    scrollProgress.style.width = pct + '%';
-  }, { passive: true });
 
   /* ---------- HERO SLIDER ---------- */
   const heroSlides = document.querySelectorAll('.hero-slide');
@@ -371,22 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- GALLERY FILTER ---------- */
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const galleryItems = document.querySelectorAll('.gallery-item');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      galleryItems.forEach(item => {
-        const match = filter === 'all' || item.dataset.category === filter;
-        item.classList.toggle('hidden', !match);
-      });
-    });
-  });
-
   /* ---------- LIGHTBOX ---------- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
@@ -497,22 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- NEWSLETTER FORM ---------- */
-  const newsletterForm = document.getElementById('newsletterForm');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = newsletterForm.querySelector('input');
-      if (input.value) {
-        input.value = '';
-        input.placeholder = 'Grazie per l\'iscrizione!';
-        setTimeout(() => { input.placeholder = 'La tua email'; }, 3000);
-      }
-    });
-  }
-
-  /* ---------- SCROLL TO TOP (legacy removed) ---------- */
-
   /* ---------- SCROLL ANIMATIONS ---------- */
   const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
   const observer = new IntersectionObserver((entries) => {
@@ -585,14 +550,6 @@ document.addEventListener('DOMContentLoaded', () => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(16px)';
     el.style.transition = `opacity 0.5s ease ${i % 2 * 0.1}s, transform 0.5s ease ${i % 2 * 0.1}s`;
-    observer.observe(el);
-  });
-
-  // Chi siamo stats
-  document.querySelectorAll('.chi-siamo-stat').forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`;
     observer.observe(el);
   });
 
@@ -675,10 +632,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'dasapere.tag': 'Informazioni Pratiche', 'dasapere.title': 'Da sapere prima di arrivare.',
       'info.checkin.title': 'Check-in', 'info.checkout.title': 'Check-out',
       'info.checkin.note': 'Per orari diversi contattaci in anticipo',
-      'info.col.title': 'Colazione', 'info.col.desc': 'Convenzionata con il bar più vicino alla struttura.',
       'info.online.title': 'Check-in Online', 'info.online.desc': 'Completa il check-in prima di arrivare e risparmia tempo all\'arrivo.',
       'info.access.title': 'Accesso', 'info.access.desc': 'Ingresso indipendente per ogni camera. Totale autonomia. Self check-in disponibile.',
       'info.docs.title': 'Documenti', 'info.docs.desc': 'Al check-in è richiesto un documento d\'identità valido per tutti gli ospiti.',
+      'info.visitatori.title': 'Visitatori', 'info.visitatori.desc': 'Non è consentito ospitare persone non registrate in struttura.',
       'info.cancel.title': 'Cancellazione', 'info.cancel.desc': 'Le condizioni variano a seconda della tipologia di alloggio. Verifica le condizioni applicabili prima di prenotare.',
       'info.bambini.title': 'Bambini', 'info.bambini.desc': 'I bambini di tutte le età sono i benvenuti. Culla gratuita (0–1 anni) su richiesta. Letto extra €15/notte (2+ anni) su richiesta.',
       'info.animali.title': 'Animali', 'info.pets.desc': 'Animali ammessi su richiesta. Potrebbe essere richiesto un supplemento.',
@@ -738,10 +695,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'dasapere.tag': 'Practical Info', 'dasapere.title': 'What to know before you arrive.',
       'info.checkin.title': 'Check-in', 'info.checkout.title': 'Check-out',
       'info.checkin.note': 'For different times, please contact us in advance',
-      'info.col.title': 'Breakfast', 'info.col.desc': 'Served at the nearest bar to the property.',
       'info.online.title': 'Online Check-in', 'info.online.desc': 'Complete check-in before you arrive and save time on arrival.',
       'info.access.title': 'Access', 'info.access.desc': 'Independent entrance for each room. Full autonomy. Self check-in available.',
       'info.docs.title': 'Documents', 'info.docs.desc': 'A valid ID is required at check-in for all guests.',
+      'info.visitatori.title': 'Visitors', 'info.visitatori.desc': 'Hosting unregistered guests is not permitted.',
       'info.cancel.title': 'Cancellation', 'info.cancel.desc': 'Conditions vary depending on the type of accommodation. Check applicable conditions before booking.',
       'info.bambini.title': 'Children', 'info.bambini.desc': 'Children of all ages are welcome. Free cot (0–1 years) on request. Extra bed €15/night (2+ years) on request.',
       'info.animali.title': 'Pets', 'info.pets.desc': 'Pets allowed on request. A supplement may be required.',
@@ -801,10 +758,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'dasapere.tag': 'Info Práctica', 'dasapere.title': 'Lo que debes saber antes de llegar.',
       'info.checkin.title': 'Check-in', 'info.checkout.title': 'Check-out',
       'info.checkin.note': 'Para horarios diferentes, contáctanos con antelación',
-      'info.col.title': 'Desayuno', 'info.col.desc': 'Servido en el bar más cercano al alojamiento.',
       'info.online.title': 'Check-in Online', 'info.online.desc': 'Completa el check-in antes de llegar y ahorra tiempo a tu llegada.',
       'info.access.title': 'Acceso', 'info.access.desc': 'Entrada independiente para cada habitación. Total autonomía. Self check-in disponible.',
       'info.docs.title': 'Documentos', 'info.docs.desc': 'Se requiere un documento de identidad válido en el check-in para todos los huéspedes.',
+      'info.visitatori.title': 'Visitantes', 'info.visitatori.desc': 'No está permitido hospedar personas no registradas en el alojamiento.',
       'info.cancel.title': 'Cancelación', 'info.cancel.desc': 'Las condiciones varían según el tipo de alojamiento. Verifica las condiciones aplicables antes de reservar.',
       'info.bambini.title': 'Niños', 'info.bambini.desc': 'Los niños de todas las edades son bienvenidos. Cuna gratuita (0–1 años) bajo petición. Cama extra €15/noche (2+ años) bajo petición.',
       'info.animali.title': 'Mascotas', 'info.pets.desc': 'Animales permitidos bajo petición. Puede requerirse un suplemento.',
@@ -864,10 +821,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'dasapere.tag': 'Infos Pratiques', 'dasapere.title': 'À savoir avant d\'arriver.',
       'info.checkin.title': 'Check-in', 'info.checkout.title': 'Check-out',
       'info.checkin.note': 'Pour des horaires différents, contactez-nous à l\'avance',
-      'info.col.title': 'Petit-déjeuner', 'info.col.desc': 'Servi au bar le plus proche du logement.',
-      'info.online.title': 'Check-in en ligne', 'info.online.desc': 'Effectuez le check-in avant d\'arriver et gagnez du temps à votre arrivée.',
+            'info.online.title': 'Check-in en ligne', 'info.online.desc': 'Effectuez le check-in avant d\'arriver et gagnez du temps à votre arrivée.',
       'info.access.title': 'Accès', 'info.access.desc': 'Entrée indépendante pour chaque chambre. Autonomie totale. Self check-in disponible.',
       'info.docs.title': 'Documents', 'info.docs.desc': 'Une pièce d\'identité valide est requise au check-in pour tous les hôtes.',
+      'info.visitatori.title': 'Visiteurs', 'info.visitatori.desc': 'Il n\'est pas permis d\'héberger des personnes non enregistrées dans le logement.',
       'info.cancel.title': 'Annulation', 'info.cancel.desc': 'Les conditions varient selon le type de logement. Vérifiez les conditions applicables avant de réserver.',
       'info.bambini.title': 'Enfants', 'info.bambini.desc': 'Les enfants de tout âge sont les bienvenus. Lit bébé gratuit (0–1 an) sur demande. Lit supplémentaire €15/nuit (2+ ans) sur demande.',
       'info.animali.title': 'Animaux', 'info.pets.desc': 'Animaux acceptés sur demande. Un supplément peut être demandé.',
@@ -928,7 +885,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const savedLang = localStorage.getItem('lang');
-  if (savedLang && savedLang !== 'it') applyLang(savedLang);
+  if (savedLang && savedLang !== 'it') {
+    applyLang(savedLang);
+  } else if (!savedLang) {
+    // Rilevazione automatica lingua browser
+    const browserLang = navigator.language || navigator.userLanguage || 'it';
+    const langMap = {
+      'en': 'en', 'en-US': 'en', 'en-GB': 'en', 'en-AU': 'en',
+      'es': 'es', 'es-ES': 'es', 'es-MX': 'es', 'es-AR': 'es',
+      'fr': 'fr', 'fr-FR': 'fr', 'fr-BE': 'fr', 'fr-CA': 'fr'
+    };
+    const detectedLang = langMap[browserLang] || 'it';
+    if (detectedLang !== 'it') applyLang(detectedLang);
+  }
 
   /* ---------- COOKIE BANNER ---------- */
   const cookieBanner = document.getElementById('cookieBanner');
