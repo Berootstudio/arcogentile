@@ -1089,12 +1089,16 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+        // Forza aggiornamento Service Worker
+        navigator.serviceWorker.getRegistrations().then(regs => {
+          regs.forEach(reg => reg.update());
+        });
+        navigator.serviceWorker.register('/sw.js?v=2').catch(() => {});
       });
     }
   </script>
 
   <!-- Script -->
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

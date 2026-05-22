@@ -2,7 +2,7 @@
    Service Worker — B&B Arco Gentile 2026
 =================================================== */
 
-const CACHE_NAME = 'arco-gentile-v2';
+const CACHE_NAME = 'arco-gentile-v3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
