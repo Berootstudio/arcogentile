@@ -38,17 +38,34 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (IS_DEV) return; /* nessuna cache in locale */
+  if (IS_DEV) return;
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        if (!response || response.status !== 200 || response.type === 'opaque') return response;
+
+  const url = new URL(event.request.url);
+  const isCore = ['/index.html', '/style.css', '/script.js', '/'].includes(url.pathname);
+
+  if (isCore) {
+    /* Network first per file core: prende sempre la versione aggiornata */
+    event.respondWith(
+      fetch(event.request).then((response) => {
+        if (!response || response.status !== 200) return response;
         const clone = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         return response;
-      });
-    }).catch(() => caches.match('/index.html'))
-  );
+      }).catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
+    );
+  } else {
+    /* Cache first per immagini e risorse statiche */
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request).then((response) => {
+          if (!response || response.status !== 200 || response.type === 'opaque') return response;
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          return response;
+        });
+      }).catch(() => caches.match('/index.html'))
+    );
+  }
 });
