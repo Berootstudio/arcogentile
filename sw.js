@@ -2,33 +2,19 @@
    Service Worker — B&B Arco Gentile 2026
 =================================================== */
 
-const CACHE_NAME = 'arco-gentile-v3';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json',
-  '/Foto/Logo/bb-arco-gentile-logo.png',
-  '/Foto/Sylos/bb-arco-gentile-camera-sylos-letto-matrimoniale.jpg',
-  '/Foto/Traetta/bb-arco-gentile-camera-traetta-letto-matrimoniale.jpg',
-  '/Foto/Giordano/bb-arco-gentile-camera-giordano-letto-matrimoniale.jpg',
-  '/Foto/Montemar/bb-arco-gentile-camera-montemar-letto-matrimoniale.jpg'
-];
+const CACHE_NAME = 'arco-gentile-img-v1';
 
-/* In sviluppo (localhost) il SW non fa nulla */
+/* Estensioni da mettere in cache (solo immagini) */
+const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.ico'];
+
 const IS_DEV = self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1';
 
-self.addEventListener('install', (event) => {
-  if (IS_DEV) { self.skipWaiting(); return; }
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
-  );
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  if (IS_DEV) { self.clients.claim(); return; }
+  /* Pulisce tutte le cache vecchie */
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
@@ -42,20 +28,10 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
-  const isCore = ['/index.html', '/style.css', '/script.js', '/'].includes(url.pathname);
+  const isImage = IMAGE_EXTS.some(ext => url.pathname.toLowerCase().endsWith(ext));
 
-  if (isCore) {
-    /* Network first per file core: prende sempre la versione aggiornata */
-    event.respondWith(
-      fetch(event.request).then((response) => {
-        if (!response || response.status !== 200) return response;
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      }).catch(() => caches.match(event.request).then(cached => cached || caches.match('/index.html')))
-    );
-  } else {
-    /* Cache first per immagini e risorse statiche */
+  if (isImage) {
+    /* Cache first solo per immagini */
     event.respondWith(
       caches.match(event.request).then((cached) => {
         if (cached) return cached;
@@ -65,7 +41,8 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           return response;
         });
-      }).catch(() => caches.match('/index.html'))
+      })
     );
   }
+  /* HTML / CSS / JS: nessuna intercettazione → sempre dalla rete */
 });
