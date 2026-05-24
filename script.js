@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 80);
 
     document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      preloader.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 8000);
     window.addEventListener('load', () => {
       preloaderFill.style.width = '100%';
       setTimeout(() => {
@@ -423,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeLightbox() {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
+    document.removeEventListener('keydown', lightboxKeyHandler);
   }
 
   galleryItems.forEach((item, i) => {
@@ -448,12 +453,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLightbox();
   });
 
-  document.addEventListener('keydown', (e) => {
+  function lightboxKeyHandler(e) {
     if (!lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length; updateLightbox(); }
     if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visibleItems.length; updateLightbox(); }
-  });
+  }
+  document.addEventListener('keydown', lightboxKeyHandler);
 
   /* Touch swipe lightbox */
   let touchStartX = 0;

@@ -3,6 +3,32 @@
    Colori: Terracotta · Gray · Oro · Navy (accenti)
 =================================================== */
 
+:root {
+  --terracotta: #C1674A;
+  --terracotta-dark: #A0503A;
+  --navy: #0F4C75;
+  --navy-rgb: 28,43,74;
+  --gold: #E2B84A;
+  --white: #FFFFFF;
+  --off-white: #FAF8F5;
+  --gray-100: #F4F1EC;
+  --gray-200: #E8E2D9;
+  --gray-400: #ADA39A;
+  --gray-600: #6B6259;
+  --gray-800: #2E2922;
+  --text: #2E2922;
+  --text-light: #6B6259;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 24px rgba(var(--navy-rgb),0.10);
+  --shadow-lg: 0 8px 48px rgba(var(--navy-rgb),0.15);
+  --transition: 0.3s ease;
+  --section-pad: 96px;
+}
+
 body { max-width: 100vw; }
 img, video, iframe { max-width: 100%; }
 
@@ -60,30 +86,6 @@ img, video, iframe { max-width: 100%; }
 /* ---------- RESET & BASE ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --terracotta: #C1674A;
-  --terracotta-dark: #A0503A;
-  --navy: #0F4C75;
-  --gold: #E2B84A;
-  --white: #FFFFFF;
-  --off-white: #FAF8F5;
-  --gray-100: #F4F1EC;
-  --gray-200: #E8E2D9;
-  --gray-400: #ADA39A;
-  --gray-600: #6B6259;
-  --gray-800: #2E2922;
-  --text: #2E2922;
-  --text-light: #6B6259;
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-lg: 20px;
-  --shadow: 0 4px 24px rgba(28,43,74,0.10);
-  --shadow-lg: 0 8px 48px rgba(28,43,74,0.15);
-  --transition: 0.3s ease;
-  --section-pad: 96px;
-}
 
 /* Dark mode */
 [data-theme="dark"] {
@@ -368,8 +370,8 @@ input, select, textarea, button { font-family: inherit; }
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(28,43,74,0.75) 0%,
-    rgba(28,43,74,0.45) 50%,
+    rgba(var(--navy-rgb),0.75) 0%,
+    rgba(var(--navy-rgb),0.45) 50%,
     rgba(193,103,74,0.3) 100%
   );
 }
@@ -537,7 +539,7 @@ input, select, textarea, button { font-family: inherit; }
 }
 .cal-overlay.open { display: block; }
 .cal-panel {
-  background: rgba(28,43,74,0.97);
+  background: rgba(var(--navy-rgb),0.97);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(201,168,76,0.25);
   border-radius: var(--radius-lg);
@@ -1011,10 +1013,10 @@ input, select, textarea, button { font-family: inherit; }
   gap: 24px;
 }
 .servizio-card {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-align: center !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   background: rgba(255,255,255,0.06);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.1);
@@ -1050,12 +1052,6 @@ input, select, textarea, button { font-family: inherit; }
 
 /* ---------- GALLERIA ---------- */
 .galleria { background: var(--off-white); }
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
 /* Collage cinematografico */
 .collage-grid {
   display: grid;
@@ -1085,7 +1081,7 @@ input, select, textarea, button { font-family: inherit; }
 .gallery-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(28,43,74,0.7) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(var(--navy-rgb),0.7) 0%, transparent 60%);
   opacity: 0;
   transition: opacity var(--transition);
   display: flex;
@@ -1809,7 +1805,6 @@ input, select, textarea, button { font-family: inherit; }
 
   .camere-grid-2col { grid-template-columns: repeat(3, 1fr); }
   .servizi-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
   .collage-grid { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .dove-siamo-wrap { grid-template-columns: 1fr; }
@@ -1873,7 +1868,6 @@ input, select, textarea, button { font-family: inherit; }
   .servizi-cat-body { padding: 0 16px; }
 
   /* Galleria — disabilita span su griglia a 2 colonne */
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .collage-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 180px;
@@ -1965,7 +1959,6 @@ input, select, textarea, button { font-family: inherit; }
   .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
 
   /* Gallery */
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
   .collage-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
 
   /* Da sapere */
