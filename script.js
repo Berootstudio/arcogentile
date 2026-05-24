@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---------- LIGHTBOX ---------- */
+  const galleryItems = document.querySelectorAll('.gallery-item');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxCaption = document.getElementById('lightboxCaption');
