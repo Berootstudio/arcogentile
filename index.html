@@ -38,7 +38,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
   <link rel="shortcut icon" href="favicon/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="Foto/Logo/bb-arco-gentile-logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/favicon-96x96.png" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0F4C75" />
 
@@ -114,8 +114,6 @@
   </script>
 </head>
 <body>
-  <script>if('scrollRestoration'in history)history.scrollRestoration='manual';window.scrollTo(0,0);</script>
-
   <!-- Preloader -->
   <div class="preloader" id="preloader">
     <div class="preloader-inner">
@@ -187,7 +185,12 @@
     </div>
 
     <!-- Booking Bar -->
-    <div class="booking-bar">
+    <div class="booking-bar" id="bookingBar">
+      <button class="booking-bar-toggle" id="bookingBarToggle">
+        <i class="fa-regular fa-calendar"></i>
+        <span data-i18n="booking.btn">Verifica disponibilità</span>
+        <i class="fa-solid fa-chevron-down booking-bar-chevron"></i>
+      </button>
       <div class="booking-bar-inner">
 
         <!-- Arrivo -->
@@ -245,7 +248,7 @@
       <div class="cal-panel-grids" id="calPanelGrids"></div>
       <div class="cal-panel-footer">
         <span class="cal-nights-label" id="calNights"></span>
-        <button class="btn btn-primary btn-sm" id="calConfirm">Conferma</button>
+        <button class="btn btn-primary btn-sm" id="calConfirm" data-i18n="cal.confirm">Conferma</button>
       </div>
     </div>
   </div>
@@ -637,16 +640,16 @@
             <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="rec-date"><img src="Foto/Logo/toppng.com-oogle-review-logo-png-google-reviews-transparent-993x400.png" alt="Google Reviews" class="rec-google-logo" /></span>
           </div>
-          <p class="rec-text rec-no-comment">Nessun commento rilasciato.</p>
+          <p class="rec-text rec-no-comment" data-i18n="rec.nocomment">Nessun commento rilasciato.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">Da solo</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">Da solo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Buon prezzo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Buon prezzo</span></div>
               <div class="rec-detail-item"></div>
             </div>
           </div>
@@ -666,15 +669,15 @@
             <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="rec-date"><img src="Foto/Logo/toppng.com-oogle-review-logo-png-google-reviews-transparent-993x400.png" alt="Google Reviews" class="rec-google-logo" /></span>
           </div>
-          <p class="rec-text rec-no-comment">Nessun commento rilasciato.</p>
+          <p class="rec-text rec-no-comment" data-i18n="rec.nocomment">Nessun commento rilasciato.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
               <div class="rec-detail-item"></div>
               <div class="rec-detail-item"></div>
             </div>
@@ -698,13 +701,13 @@
           <p class="rec-text">L'appartamento è tranquillo ma centrale. Arredato in stile moderno, molto pulito. La comunicazione con l'host è stata fantastica. Tutto è andato liscio e ci siamo trovati benissimo. Lo consigliamo assolutamente!</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Tranquillo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Tranquillo</span></div>
               <div class="rec-detail-item"></div>
             </div>
           </div>
@@ -724,12 +727,12 @@
             <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
             <span class="rec-date"><img src="Foto/Logo/toppng.com-oogle-review-logo-png-google-reviews-transparent-993x400.png" alt="Google Reviews" class="rec-google-logo" /></span>
           </div>
-          <p class="rec-text rec-no-comment">Nessun commento rilasciato.</p>
+          <p class="rec-text rec-no-comment" data-i18n="rec.nocomment">Nessun commento rilasciato.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
             </div>
           </div>
         </div>
@@ -751,14 +754,14 @@
           <p class="rec-text">Posizione centrale camere non grandissime ma ottime eleganti e pulizia ok</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">Amici</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.tipo">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">Amici</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">5 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Tranquillo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Tranquillo</span></div>
             </div>
           </div>
         </div>
@@ -780,13 +783,13 @@
           <p class="rec-text">Con la sua posizione strategica, il servizio preciso ed accogliente il B&B si è dimostrato essere un ottimo compromesso tra qualità e prezzo. Ci ritorneremo!</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">4 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.tipo">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Tranquillo, Bambini, Prezzo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Tranquillo, Bambini, Prezzo</span></div>
               <div class="rec-detail-item"></div>
             </div>
           </div>
@@ -809,9 +812,9 @@
           <p class="rec-text">Accogliente struttura nel cuore di Bitonto. Simona, la proprietaria, è davvero gentile e disponibile. L'appartamento familiare era semplice ma pulito e confortevole, aveva tutto il necessario.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">4 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
             </div>
           </div>
         </div>
@@ -833,14 +836,14 @@
           <p class="rec-text">Tutto molto bello e organizzato solo che mancava il riscaldamento e c'era solo una stufetta elettrica.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">In coppia</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.tipo">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">In coppia</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">4 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Tranquillo, Prezzo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">5 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Tranquillo, Prezzo</span></div>
             </div>
           </div>
         </div>
@@ -862,14 +865,14 @@
           <p class="rec-text">Pratique pour arriver à l'aéroport de bonne heure.</p>
           <div class="rec-details">
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Camere</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.tipo">Tipo di viaggio</span><span class="rec-detail-value">Vacanza</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.gruppo">In gruppo</span><span class="rec-detail-value">Famiglia</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.camere">Camere</span><span class="rec-detail-value">4 / 5</span></div>
             </div>
             <div class="rec-details-row">
-              <div class="rec-detail-item"><span class="rec-detail-label">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Posizione</span><span class="rec-detail-value">4 / 5</span></div>
-              <div class="rec-detail-item"><span class="rec-detail-label">Punti forti</span><span class="rec-detail-value">Buon prezzo</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.servizio">Servizio</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.posizione">Posizione</span><span class="rec-detail-value">4 / 5</span></div>
+              <div class="rec-detail-item"><span class="rec-detail-label" data-i18n="rec.punti">Punti forti</span><span class="rec-detail-value">Buon prezzo</span></div>
             </div>
           </div>
         </div>
@@ -1069,7 +1072,7 @@
       <p data-i18n="cookie.text">Questo sito utilizza cookie tecnici necessari al funzionamento. Per maggiori informazioni consulta la nostra <a href="privacy.html" target="_blank">Privacy Policy</a> e la <a href="cookie.html" target="_blank">Cookie Policy</a>.</p>
     </div>
     <div class="cookie-actions">
-      <button class="btn btn-primary btn-sm" id="cookieAccept" onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieAccepted','1')" data-i18n="cookie.accept">Accetto</button>
+      <button class="btn btn-primary btn-sm" id="cookieAccept" data-i18n="cookie.accept">Accetto</button>
       <a href="cookie.html" target="_blank" class="cookie-info-link" data-i18n="cookie.more">Maggiori info</a>
     </div>
   </div>

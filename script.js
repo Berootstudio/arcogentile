@@ -3,9 +3,8 @@
 =================================================== */
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-window.scrollTo(0, 0);
+document.addEventListener('DOMContentLoaded', () => window.scrollTo(0, 0));
 window.addEventListener('load', () => window.scrollTo(0, 0));
-window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -96,9 +95,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  /* ---------- BOOKING BAR TOGGLE (mobile) ---------- */
+  const bookingBarToggle = document.getElementById('bookingBarToggle');
+  const bookingBar = document.getElementById('bookingBar');
+  if (bookingBarToggle && bookingBar) {
+    bookingBarToggle.addEventListener('click', () => {
+      bookingBar.classList.toggle('is-open');
+    });
+  }
+
   /* ---------- DARK MODE ---------- */
   const darkToggle = document.getElementById('darkToggle');
   const darkIcon = document.getElementById('darkIcon');
+  function applyDark(on) {
+    document.documentElement.setAttribute('data-theme', on ? 'dark' : 'light');
+    darkIcon.className = on ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    localStorage.setItem('arco-theme', on ? 'dark' : 'light');
+  }
+
   const saved = localStorage.getItem('arco-theme');
   if (saved === 'dark') applyDark(true);
 
@@ -107,15 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
     applyDark(!isDark);
   });
 
-  function applyDark(on) {
-    document.documentElement.setAttribute('data-theme', on ? 'dark' : 'light');
-    darkIcon.className = on ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    localStorage.setItem('arco-theme', on ? 'dark' : 'light');
-  }
-
   /* ---------- BOOKING BAR ---------- */
-  const MONTHS_IT = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-  const DAYS_IT   = ['Lu','Ma','Me','Gi','Ve','Sa','Do'];
+  const MONTHS = {
+    it: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    es: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    fr: ['Janvier','F\u00e9vrier','Mars','Avril','Mai','Juin','Juillet','Ao\u00fbt','Septembre','Octobre','Novembre','D\u00e9cembre']
+  };
+  const DAYS = {
+    it: ['Lu','Ma','Me','Gi','Ve','Sa','Do'],
+    en: ['Mo','Tu','We','Th','Fr','Sa','Su'],
+    es: ['Lu','Ma','Mi','Ju','Vi','S\u00e1','Do'],
+    fr: ['Lu','Ma','Me','Je','Ve','Sa','Di']
+  };
+  function getCurrentLang() { return localStorage.getItem('lang') || 'it'; }
 
   let bbCheckIn   = null; // 'YYYY-MM-DD'
   let bbCheckOut  = null;
@@ -147,13 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function parseYMD(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y,m-1,d); }
   function fmtDate(ymd) {
     const d = parseYMD(ymd);
-    return d.getDate() + ' ' + MONTHS_IT[d.getMonth()].slice(0,3);
+    return d.getDate() + ' ' + (MONTHS[getCurrentLang()] || MONTHS.it)[d.getMonth()].slice(0,3);
   }
 
   function buildGrid(base) {
     const today = new Date(); today.setHours(0,0,0,0);
     const grid = document.createElement('div');
     grid.className = 'cal-grid';
+    const lang = getCurrentLang();
+    const MONTHS_IT = MONTHS[lang] || MONTHS.it;
+    const DAYS_IT = DAYS[lang] || DAYS.it;
     DAYS_IT.forEach(d => {
       const el = document.createElement('div');
       el.className = 'cal-dow'; el.textContent = d; grid.appendChild(el);
@@ -198,7 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date(); today.setHours(0,0,0,0);
     const base0 = new Date(today.getFullYear(), today.getMonth() + calOffset, 1);
     const base1 = new Date(today.getFullYear(), today.getMonth() + calOffset + 1, 1);
-    calTitles.innerHTML = `<div class="cal-month-title">${MONTHS_IT[base0.getMonth()]} ${base0.getFullYear()}</div><div class="cal-month-title">${MONTHS_IT[base1.getMonth()]} ${base1.getFullYear()}</div>`;
+    const mNames = MONTHS[getCurrentLang()] || MONTHS.it;
+    calTitles.innerHTML = `<div class="cal-month-title">${mNames[base0.getMonth()]} ${base0.getFullYear()}</div><div class="cal-month-title">${mNames[base1.getMonth()]} ${base1.getFullYear()}</div>`;
     calPanelGrids.innerHTML = '';
     calPanelGrids.appendChild(buildGrid(base0));
     calPanelGrids.appendChild(buildGrid(base1));
@@ -378,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxNext = document.getElementById('lightboxNext');
 
   let currentIndex = 0;
-  let visibleItems = [];
+  let visibleItems = [...galleryItems];
 
   function openLightbox(index) {
     visibleItems = [...galleryItems].filter(i => !i.classList.contains('hidden'));
@@ -443,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLightbox();
   }, { passive: true });
 
-  /* ---------- CONTACT FORM (Web3Forms) ---------- */
+  /* ---------- CONTACT FORM (Google Apps Script) ---------- */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
@@ -626,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'srv3.title': 'Wi-Fi Premium', 'srv3.desc': 'Connessione wireless stabile e veloce, disponibile gratuitamente in tutta la struttura.',
       'srv4.title': 'Autonomia Completa', 'srv4.desc': 'Gli ingressi indipendenti ti permettono di gestire gli orari di arrivo e partenza in totale libertà.',
       'srv5.title': 'Aria Condizionata', 'srv5.desc': 'Clima perfetto in ogni stagione per un riposo sempre confortevole.',
-      'srv6.title': 'Info Turistiche', 'srv6.desc': 'Consigli su itinerari, ristoranti e attrazioni della Puglia su richiesta.',
+      'srv6.title': 'Colazione', 'srv6.desc': 'Convenzionata con il bar più vicino alla struttura, inclusa nel prezzo.',
       'galleria.tag': 'La Struttura', 'galleria.title': 'Scopri gli spazi.',
       'doveputsiamo.tag': 'La Posizione', 'doveputsiamo.title': 'Nel cuore di Bitonto.',
       'recensioni.tag': 'Le Opinioni', 'recensioni.title': 'Cosa dicono i nostri ospiti.',
@@ -661,6 +684,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'cookie.text': 'Questo sito utilizza cookie tecnici necessari al funzionamento. Per maggiori informazioni consulta la nostra <a href="privacy.html" target="_blank">Privacy Policy</a> e la <a href="cookie.html" target="_blank">Cookie Policy</a>.',
       'cookie.accept': 'Accetto', 'cookie.more': 'Maggiori info',
       'contatti.tag': 'Scrivici', 'contatti.title': 'Contatti.',
+      'cal.confirm': 'Conferma',
+      'rec.gruppo': 'In gruppo', 'rec.camere': 'Camere', 'rec.servizio': 'Servizio',
+      'rec.posizione': 'Posizione', 'rec.punti': 'Punti forti', 'rec.tipo': 'Tipo di viaggio',
+      'rec.nocomment': 'Nessun commento rilasciato.',
     },
     en: {
       'nav.chisiamo': 'About Us', 'nav.camere': 'Rooms', 'nav.servizi': 'Services',
@@ -689,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'srv3.title': 'Premium Wi-Fi', 'srv3.desc': 'Fast and stable wireless connection, available free of charge throughout the property.',
       'srv4.title': 'Full Autonomy', 'srv4.desc': 'Independent entrances allow you to manage arrival and departure times with total freedom.',
       'srv5.title': 'Air Conditioning', 'srv5.desc': 'Perfect climate in every season for a consistently comfortable rest.',
-      'srv6.title': 'Tourist Info', 'srv6.desc': 'Tips on itineraries, restaurants and attractions in Puglia on request.',
+      'srv6.title': 'Breakfast', 'srv6.desc': 'Provided at the nearest bar to the property, included in the price.',
       'galleria.tag': 'The Property', 'galleria.title': 'Discover the spaces.',
       'doveputsiamo.tag': 'Location', 'doveputsiamo.title': 'In the heart of Bitonto.',
       'recensioni.tag': 'Reviews', 'recensioni.title': 'What our guests say.',
@@ -724,6 +751,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'cookie.text': 'This site uses technical cookies necessary for its operation. For more information see our <a href="privacy.html" target="_blank">Privacy Policy</a> and <a href="cookie.html" target="_blank">Cookie Policy</a>.',
       'cookie.accept': 'Accept', 'cookie.more': 'More info',
       'contatti.tag': 'Contact Us', 'contatti.title': 'Contacts.',
+      'cal.confirm': 'Confirm',
+      'rec.gruppo': 'Group type', 'rec.camere': 'Rooms', 'rec.servizio': 'Service',
+      'rec.posizione': 'Location', 'rec.punti': 'Highlights', 'rec.tipo': 'Trip type',
+      'rec.nocomment': 'No comment provided.',
     },
     es: {
       'nav.chisiamo': 'Quiénes Somos', 'nav.camere': 'Habitaciones', 'nav.servizi': 'Servicios',
@@ -752,7 +783,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'srv3.title': 'Wi-Fi Premium', 'srv3.desc': 'Conexión inalámbrica rápida y estable, disponible gratuitamente en todo el alojamiento.',
       'srv4.title': 'Autonomía Total', 'srv4.desc': 'Las entradas independientes te permiten gestionar los horarios de llegada y salida con total libertad.',
       'srv5.title': 'Aire Acondicionado', 'srv5.desc': 'Clima perfecto en cada estación para un descanso siempre confortable.',
-      'srv6.title': 'Info Turística', 'srv6.desc': 'Consejos sobre itinerarios, restaurantes y atracciones de Puglia bajo petición.',
+      'srv6.title': 'Desayuno', 'srv6.desc': 'Convenio con el bar más cercano al alojamiento, incluido en el precio.',
       'galleria.tag': 'El Alojamiento', 'galleria.title': 'Descubre los espacios.',
       'doveputsiamo.tag': 'Ubicación', 'doveputsiamo.title': 'En el corazón de Bitonto.',
       'recensioni.tag': 'Opiniones', 'recensioni.title': 'Lo que dicen nuestros huéspedes.',
@@ -787,6 +818,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'cookie.text': 'Este sitio utiliza cookies técnicas necesarias para su funcionamiento. Para más información consulta nuestra <a href="privacy.html" target="_blank">Política de Privacidad</a> y la <a href="cookie.html" target="_blank">Política de Cookies</a>.',
       'cookie.accept': 'Acepto', 'cookie.more': 'Más info',
       'contatti.tag': 'Contáctanos', 'contatti.title': 'Contactos.',
+      'cal.confirm': 'Confirmar',
+      'rec.gruppo': 'Tipo de grupo', 'rec.camere': 'Habitaciones', 'rec.servizio': 'Servicio',
+      'rec.posizione': 'Ubicación', 'rec.punti': 'Puntos fuertes', 'rec.tipo': 'Tipo de viaje',
+      'rec.nocomment': 'Sin comentario proporcionado.',
     },
     fr: {
       'nav.chisiamo': 'À propos', 'nav.camere': 'Chambres', 'nav.servizi': 'Services',
@@ -815,7 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'srv3.title': 'Wi-Fi Premium', 'srv3.desc': 'Connexion sans fil rapide et stable, disponible gratuitement dans tout le logement.',
       'srv4.title': 'Autonomie Complète', 'srv4.desc': 'Les entrées indépendantes vous permettent de gérer vos horaires d\'arrivée et de départ en toute liberté.',
       'srv5.title': 'Climatisation', 'srv5.desc': 'Climat parfait en toute saison pour un repos toujours confortable.',
-      'srv6.title': 'Infos Touristiques', 'srv6.desc': 'Conseils sur les itinéraires, restaurants et attractions des Pouilles sur demande.',
+      'srv6.title': 'Petit-Déjeuner', 'srv6.desc': 'Convention avec le bar le plus proche du logement, inclus dans le prix.',
       'galleria.tag': 'La Structure', 'galleria.title': 'Découvrez les espaces.',
       'doveputsiamo.tag': 'La Position', 'doveputsiamo.title': 'Au cœur de Bitonto.',
       'recensioni.tag': 'Les Avis', 'recensioni.title': 'Ce que disent nos hôtes.',
@@ -850,6 +885,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'cookie.text': 'Ce site utilise des cookies techniques nécessaires à son fonctionnement. Pour plus d’informations consultez notre <a href="privacy.html" target="_blank">Politique de confidentialité</a> et la <a href="cookie.html" target="_blank">Politique des cookies</a>.',
       'cookie.accept': 'Accepter', 'cookie.more': 'Plus d’infos',
       'contatti.tag': 'Nous Écrire', 'contatti.title': 'Contacts.',
+      'cal.confirm': 'Confirmer',
+      'rec.gruppo': 'Type de groupe', 'rec.camere': 'Chambres', 'rec.servizio': 'Service',
+      'rec.posizione': 'Emplacement', 'rec.punti': 'Points forts', 'rec.tipo': 'Type de voyage',
+      'rec.nocomment': 'Aucun commentaire fourni.',
     }
   };
 

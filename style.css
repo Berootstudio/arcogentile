@@ -413,6 +413,8 @@ input, select, textarea, button { font-family: inherit; }
   flex-wrap: wrap;
 }
 
+.booking-bar-toggle { display: none; }
+
 /* Booking Bar */
 .booking-bar {
   position: relative;
@@ -1820,7 +1822,9 @@ input, select, textarea, button { font-family: inherit; }
   :root { --section-pad: 56px; }
 
   /* Hero */
-  .hero-content { margin-left: 0; padding: 180px 20px 32px; text-align: center; }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 32px; }
+  .hero-content { margin-left: 0; padding: 120px 20px 0; text-align: center; width: 100%; }
+  .booking-bar { margin-top: 0; margin-bottom: 32px; }
   .hero-title { font-size: clamp(2rem, 8vw, 2.8rem); }
   .hero-desc { font-size: 0.95rem; margin-left: auto; margin-right: auto; }
   .hero-actions { flex-direction: column; gap: 12px; align-items: center; }
@@ -1828,9 +1832,15 @@ input, select, textarea, button { font-family: inherit; }
   .hero-slider-dots { bottom: auto; top: 50%; transform: translate(-50%, -50%); display: none; }
   .hero-slide.active img { animation: none !important; transform: none !important; }
 
-  /* Booking bar */
-  .booking-bar { border-radius: var(--radius); margin: 0 0 40px; }
-  .booking-bar-inner { flex-direction: column; gap: 0; padding: 4px 0; }
+  /* Booking bar collassabile */
+  .booking-bar { border-radius: var(--radius); width: calc(100% - 32px); opacity: 1; padding: 0; }
+  .booking-bar-toggle { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: none; border: none; color: #fff; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em; padding: 16px 20px; cursor: pointer; }
+  .booking-bar-chevron { transition: transform 0.3s ease; }
+  .booking-bar.is-open .booking-bar-chevron { transform: rotate(180deg); }
+  .booking-bar-inner { flex-direction: column; gap: 0; padding: 4px 0; display: none !important; }
+  .booking-bar.is-open .booking-bar-inner { display: flex !important; }
+  .booking-bar.is-open .booking-reassurance { display: block; }
+  .booking-reassurance { display: none; }
   .booking-divider { display: none; }
   .booking-field {
     padding: 12px 20px;
@@ -1920,7 +1930,7 @@ input, select, textarea, button { font-family: inherit; }
   .bb-date-val { white-space: normal; }
   .nav-logo { white-space: normal; }
   .hero-tag { font-size: 0.72rem; }
-  .booking-bar { margin-bottom: 32px; width: calc(100% - 32px); padding: 12px 0 8px; }
+  .booking-bar { width: calc(100% - 24px); padding: 12px 0 8px; }
   .booking-reassurance span { display: block; line-height: 1.8; }
 
   /* Calendario su schermi piccoli - centrato con margini */
